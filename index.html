@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amplify Operating Rhythm</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface-2: #1a1a26;
+    --border: #2a2a3a;
+    --text: #e4e4ef;
+    --text-secondary: #8888a0;
+    --accent: #6c5ce7;
+    --accent-light: #a29bfe;
+    --green: #00b894;
+    --orange: #fdcb6e;
+    --red: #e17055;
+    --blue: #74b9ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+  }
+  nav .nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    height: 52px;
+    gap: 2rem;
+  }
+  nav .logo {
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 0.5rem;
+    white-space: nowrap;
+  }
+  nav .logo .badge {
+    font-size: 0.6rem; font-weight: 600;
+    padding: 2px 6px; border-radius: 4px;
+    background: var(--accent); color: white;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  nav .nav-links {
+    display: flex; gap: 0.15rem;
+  }
+  nav .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.78rem; font-weight: 500;
+    padding: 5px 10px; border-radius: 6px;
+    transition: all 0.15s;
+  }
+  nav .nav-links a:hover { color: var(--text); background: var(--surface-2); }
+
+  /* Main */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 76px 2rem 5rem;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .hero h1 {
+    font-size: 2.2rem; font-weight: 700;
+    letter-spacing: -0.03em; line-height: 1.15;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, var(--text), var(--accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 1rem; color: var(--text-secondary);
+    max-width: 640px; line-height: 1.7;
+  }
+
+  /* Section */
+  section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 70px;
+  }
+  section > h2 {
+    font-size: 1.4rem; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border);
+  }
+  section > .desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  h3 {
+    font-size: 1.05rem; font-weight: 650;
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  p { margin-bottom: 0.65rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; }
+  em { color: var(--accent-light); font-style: normal; }
+
+  /* Cadence cards */
+  .cadence-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .cadence-badge {
+    font-size: 0.65rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 6px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .cadence-badge.daily { background: rgba(0, 184, 148, 0.12); color: var(--green); border: 1px solid rgba(0, 184, 148, 0.25); }
+  .cadence-badge.weekly { background: rgba(108, 92, 231, 0.12); color: var(--accent-light); border: 1px solid rgba(108, 92, 231, 0.25); }
+  .cadence-badge.monthly { background: rgba(253, 203, 110, 0.12); color: var(--orange); border: 1px solid rgba(253, 203, 110, 0.25); }
+
+  .cadence-title {
+    font-size: 1.2rem; font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .ritual {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+  .ritual .ritual-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.5rem;
+    gap: 1rem;
+  }
+  .ritual .ritual-name {
+    font-weight: 650; font-size: 0.95rem;
+  }
+  .ritual .ritual-meta {
+    font-size: 0.75rem; color: var(--text-secondary);
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .ritual .ritual-meta .tag {
+    font-size: 0.68rem; font-weight: 600;
+    padding: 2px 7px; border-radius: 4px;
+    background: var(--surface-2); border: 1px solid var(--border);
+  }
+  .ritual .ritual-body {
+    font-size: 0.87rem; color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .ritual .ritual-body .who {
+    display: inline-block;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    background: var(--surface-2);
+    padding: 1px 7px;
+    border-radius: 4px;
+    margin-bottom: 0.35rem;
+  }
+
+  /* Format block */
+  .format-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin: 0.75rem 0 0.5rem;
+  }
+  .format-item {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem;
+  }
+  .format-item .num {
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--accent-light); line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .format-item .ft { font-weight: 600; font-size: 0.82rem; margin-bottom: 0.15rem; }
+  .format-item .fd { font-size: 0.78rem; color: var(--text-secondary); margin: 0; }
+
+  /* Callout */
+  .callout {
+    background: rgba(108, 92, 231, 0.06);
+    border: 1px solid rgba(108, 92, 231, 0.18);
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    margin: 1rem 0;
+    font-size: 0.87rem;
+  }
+  .callout .ct { font-weight: 600; margin-bottom: 0.2rem; font-size: 0.84rem; }
+  .callout p { color: var(--text-secondary); margin: 0; }
+
+  .callout.green {
+    background: rgba(0, 184, 148, 0.06);
+    border-color: rgba(0, 184, 148, 0.18);
+  }
+
+  /* Hierarchy */
+  .hierarchy-mini {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0 1.5rem;
+    flex-wrap: wrap;
+  }
+  .h-level {
+    flex: 1; min-width: 140px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem;
+    position: relative;
+  }
+  .h-level::after {
+    content: '→';
+    position: absolute;
+    right: -14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--border);
+    font-size: 0.9rem;
+  }
+  .h-level:last-child::after { display: none; }
+  .h-level .hl-tag {
+    font-size: 0.6rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--accent-light);
+    margin-bottom: 0.2rem;
+  }
+  .h-level .hl-name { font-weight: 650; font-size: 0.85rem; margin-bottom: 0.15rem; }
+  .h-level .hl-desc { font-size: 0.75rem; color: var(--text-secondary); margin: 0; }
+
+  /* Goals table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 0.75rem 0 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 0.83rem;
+  }
+  thead { background: var(--surface-2); }
+  th {
+    text-align: left; padding: 0.6rem 0.9rem;
+    font-weight: 600; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.55rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(108, 92, 231, 0.04); }
+
+  /* Divider */
+  .divider { height: 1px; background: var(--border); margin: 3rem 0; }
+
+  /* Flow visual */
+  .flow {
+    display: flex; align-items: center; gap: 0.35rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .flow-arrow { color: var(--border); font-size: 0.85rem; }
+
+  /* Rules */
+  .rule {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    margin: 0.6rem 0;
+  }
+  .rule .rn {
+    font-size: 0.65rem; font-weight: 700;
+    color: var(--accent-light);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 0.15rem;
+  }
+  .rule .rt { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .rule .rd { font-size: 0.83rem; color: var(--text-secondary); margin: 0; }
+
+  code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.8em;
+    background: var(--surface-2);
+    padding: 2px 5px; border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    nav .nav-links { display: none; }
+    .hero h1 { font-size: 1.6rem; }
+    .format-grid { grid-template-columns: 1fr; }
+    .hierarchy-mini { flex-direction: column; }
+    .h-level::after { display: none; }
+    main { padding: 66px 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Amplify <span class="badge">Operating Rhythm</span></div>
+    <div class="nav-links">
+      <a href="#context">Context</a>
+      <a href="#daily">Daily</a>
+      <a href="#weekly">Weekly</a>
+      <a href="#monthly">Monthly</a>
+      <a href="#rules">Rules</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero">
+  <h1>Amplify PM Operating Rhythm</h1>
+  <p>What every Amplify PM does daily, weekly, and monthly &mdash; centered on Linear. This is the system that gives our partners visibility and keeps us aligned.</p>
+</div>
+
+<!-- CONTEXT -->
+<section id="context">
+  <h2>How Linear Maps to Everything</h2>
+  <p class="desc">Our Linear hierarchy is the backbone. Every ritual feeds into it.</p>
+
+  <div class="hierarchy-mini">
+    <div class="h-level">
+      <div class="hl-tag">Initiative</div>
+      <div class="hl-name">Working AI First</div>
+      <p class="hl-desc">Drew owns. Exec-level view.</p>
+    </div>
+    <div class="h-level">
+      <div class="hl-tag">Goals</div>
+      <div class="hl-name">Partner Commitments</div>
+      <p class="hl-desc">Each PM owns one. Monthly updates.</p>
+    </div>
+    <div class="h-level">
+      <div class="hl-tag">Projects</div>
+      <div class="hl-name">Workstreams</div>
+      <p class="hl-desc">The buildable units. Weekly updates.</p>
+    </div>
+    <div class="h-level">
+      <div class="hl-tag">Issues</div>
+      <div class="hl-name">Execution</div>
+      <p class="hl-desc">Sprint-level tasks. Daily standups.</p>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Goal</th><th>PM Owner</th><th>Linear Team</th></tr></thead>
+      <tbody>
+        <tr><td>Increase Seller PPR by 30%</td><td>Jay Chiruvolu</td><td>Amplify Sales + Demos</td></tr>
+        <tr><td>Increase Success &amp; Services time w/ customers by 30%</td><td>Tyler Beck</td><td>Amplify Success &amp; Services</td></tr>
+        <tr><td>Resolve 55% via automated resolution</td><td>Jeremy Blanchard</td><td>Amplify Support</td></tr>
+        <tr><td>Increase R&D efficiency by 13%</td><td>Christina Valente</td><td>Amplify R&D</td></tr>
+        <tr><td>Improve G&A, Marketing, Ops efficiency by 15%</td><td>Richard Ng</td><td>Amplify Marketing</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DAILY -->
+<section id="daily">
+  <div class="cadence-header">
+    <span class="cadence-badge daily">Daily</span>
+    <span class="cadence-title">Standups</span>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-header">
+      <div class="ritual-name">Async Standup</div>
+      <div class="ritual-meta">
+        <span class="tag">Async</span>
+        Every day
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">All eng + PMs</div>
+      <p>Posted in Slack or Linear by start of day. Three lines max:</p>
+      <div class="format-grid" style="margin-top: 0.5rem;">
+        <div class="format-item">
+          <div class="ft">Yesterday</div>
+          <p class="fd">What you shipped or moved forward.</p>
+        </div>
+        <div class="format-item">
+          <div class="ft">Today</div>
+          <p class="fd">What you're focused on.</p>
+        </div>
+        <div class="format-item">
+          <div class="ft">Blocked?</div>
+          <p class="fd">Anything stalled &mdash; tag the person who can unblock you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <div class="ct">Why daily?</div>
+    <p>Standups catch blockers before they fester. If something is stuck for a day, it surfaces here &mdash; not at the end of a sprint.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WEEKLY -->
+<section id="weekly">
+  <div class="cadence-header">
+    <span class="cadence-badge weekly">Weekly</span>
+    <span class="cadence-title">Sprint Check-ins &amp; Project Updates</span>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-header">
+      <div class="ritual-name">PM Sync</div>
+      <div class="ritual-meta">
+        <span class="tag">Monday</span>
+        30 min
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">All 5 PMs + Drew</div>
+      <p>Cross-cutting alignment for the week. What's shifting across partners, capacity tradeoffs, intake triage. Any partner context that should change sprint priorities gets surfaced here.</p>
+    </div>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-header">
+      <div class="ritual-name">Sprint Check-in</div>
+      <div class="ritual-meta">
+        <span class="tag">Monday</span>
+        30 min
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">All Amplify eng + PMs</div>
+      <p>Review cycle goals, confirm priorities for the week, surface blockers. PMs share any partner context from PM Sync that shifts priority. Quick confidence check: are we on track for the cycle goal?</p>
+    </div>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-header">
+      <div class="ritual-name">Weekly Demo</div>
+      <div class="ritual-meta">
+        <span class="tag">Thursday</span>
+        45 min
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">All Amplify + open invite to partners</div>
+      <p>Show working software. Every demo ties back to a partner use case and metric. Partners can attend and react in real time. This is our most powerful trust-building mechanism &mdash; protect it.</p>
+    </div>
+  </div>
+
+  <div class="ritual" style="border-color: var(--accent); border-width: 1.5px;">
+    <div class="ritual-header">
+      <div class="ritual-name">Project Status Updates in Linear</div>
+      <div class="ritual-meta">
+        <span class="tag" style="border-color: var(--accent); color: var(--accent-light);">Friday 4 PM</span>
+        10&ndash;15 min
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">Every PM &mdash; on each of their active projects</div>
+      <p>Before you close your laptop, write a status update on <strong>every active project</strong> you own. Calendar block is already on your Friday at 4:00 PM. This is non-negotiable &mdash; it's the heartbeat of partner visibility.</p>
+
+      <div class="format-grid">
+        <div class="format-item">
+          <div class="num">1</div>
+          <div class="ft">Metric Impact</div>
+          <p class="fd">How is this project moving the needle on the goal's target metric this week?</p>
+        </div>
+        <div class="format-item">
+          <div class="num">2</div>
+          <div class="ft">Blockers / Changes</div>
+          <p class="fd">Anything shifted, stalled, or needs escalation?</p>
+        </div>
+        <div class="format-item">
+          <div class="num">3</div>
+          <div class="ft">Next Week</div>
+          <p class="fd">What's planned?</p>
+        </div>
+      </div>
+
+      <p style="margin-top: 0.75rem;">Set the health indicator: <strong style="color: var(--green);">On Track</strong> / <strong style="color: var(--orange);">At Risk</strong> / <strong style="color: var(--red);">Off Track</strong></p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="ct">How this flows up</div>
+    <p>Friday project updates are what partners and leadership see in real time via Linear. They also feed directly into the Monthly Execution Review &mdash; no separate prep needed.</p>
+  </div>
+
+  <h3 style="margin-top: 1.5rem;">Bi-Weekly (Sprint Boundaries)</h3>
+
+  <div class="ritual">
+    <div class="ritual-header">
+      <div class="ritual-name">Sprint Review</div>
+      <div class="ritual-meta">
+        <span class="tag">Last Thursday</span>
+        45 min
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">Amplify team + partner stakeholders invited</div>
+      <p>Demo what shipped this sprint. Explicitly connect each demo to partner value and metrics moved.</p>
+    </div>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-header">
+      <div class="ritual-name">Sprint Planning</div>
+      <div class="ritual-meta">
+        <span class="tag">Following Monday</span>
+        30 min
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">PMs + Eng leads</div>
+      <p>Set next sprint goals. PMs bring partner input, eng leads bring capacity and technical constraints.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MONTHLY -->
+<section id="monthly">
+  <div class="cadence-header">
+    <span class="cadence-badge monthly">Monthly</span>
+    <span class="cadence-title">Goal Updates &amp; MER</span>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step"><strong>Week 1&ndash;3:</strong> Weekly project updates (Fridays)</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step"><strong>Week 4 Mon&ndash;Wed:</strong> PMs write Goal updates</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-step"><strong>Week 4 Thu/Fri:</strong> MER</div>
+  </div>
+
+  <div class="ritual" style="border-color: var(--orange); border-width: 1.5px;">
+    <div class="ritual-header">
+      <div class="ritual-name">Goal Status Update in Linear</div>
+      <div class="ritual-meta">
+        <span class="tag" style="border-color: var(--orange); color: var(--orange);">Before MER</span>
+        20&ndash;30 min
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">Every PM &mdash; on the Goal (sub-initiative) they own</div>
+      <p>Synthesize your weekly project updates into a single goal-level narrative. This update <strong>feeds directly into the MER</strong> &mdash; Drew and leadership will read it before the meeting. Write it before MER, not after.</p>
+
+      <div class="format-grid" style="margin-top: 0.75rem;">
+        <div class="format-item">
+          <div class="ft">Where We Are</div>
+          <p class="fd">Current progress vs. the goal's target metric. Use actual numbers.</p>
+        </div>
+        <div class="format-item">
+          <div class="ft">What's Working / Not</div>
+          <p class="fd">Highlights and risks. Be honest about what's off track.</p>
+        </div>
+        <div class="format-item">
+          <div class="ft">What We Need</div>
+          <p class="fd">Asks from partners, leadership, or other teams. Blockers that need escalation.</p>
+        </div>
+      </div>
+
+      <p style="margin-top: 0.75rem;">Set the health indicator: <strong style="color: var(--green);">On Track</strong> / <strong style="color: var(--orange);">At Risk</strong> / <strong style="color: var(--red);">Off Track</strong></p>
+    </div>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-header">
+      <div class="ritual-name">Monthly Execution Review (MER)</div>
+      <div class="ritual-meta">
+        <span class="tag">Last week of month</span>
+        60 min
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">Amplify leadership + all PMs + Eng leads</div>
+      <p>The "state of Amplify" meeting. Deep review of progress against quarterly goals, organized by partner org. What shipped, metrics movement, what's at risk. <strong>Goal updates must be written before this meeting</strong> &mdash; the MER is a discussion of them, not a place to present them for the first time.</p>
+    </div>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-header">
+      <div class="ritual-name">Monthly Partner Digest</div>
+      <div class="ritual-meta">
+        <span class="tag">After MER</span>
+        Async
+      </div>
+    </div>
+    <div class="ritual-body">
+      <div class="who">PMs &rarr; partner stakeholders</div>
+      <p>One-page summary per partner org, posted to <code>#amplify-x-[org]</code> Slack channels. Generated from your goal update &mdash; not a separate artifact. What shipped, what's next, metrics, asks/blockers.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="ct">The monthly flow</div>
+    <p>Weekly project updates (Fridays) accumulate context all month. Goal updates synthesize them into a narrative. The MER is the discussion. The Partner Digest is the broadcast. No extra prep at any step.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- THE RULES -->
+<section id="rules">
+  <h2>The Rules</h2>
+  <p class="desc">Non-negotiable standards for every Amplify PM.</p>
+
+  <div class="rule">
+    <div class="rn">Rule 1</div>
+    <div class="rt">Every project ties to a goal</div>
+    <p class="rd">No orphan projects. If your project doesn't connect to one of the goals under "Working AI First," it either needs to be connected or it shouldn't exist.</p>
+  </div>
+
+  <div class="rule">
+    <div class="rn">Rule 2</div>
+    <div class="rt">Linear is the source. Everything else is a view.</div>
+    <p class="rd">If you present a roadmap in slides, it's generated from Linear &mdash; not maintained separately. When things change, you update Linear, not a slide.</p>
+  </div>
+
+  <div class="rule">
+    <div class="rn">Rule 3</div>
+    <div class="rt">Projects need milestones</div>
+    <p class="rd">At least one milestone per quarter per project. Name them clearly (e.g., "BDR Intelligence POC &mdash; Go/No-Go" not "M1").</p>
+  </div>
+
+  <div class="rule">
+    <div class="rn">Rule 4</div>
+    <div class="rt">Friday project updates are non-negotiable</div>
+    <p class="rd">Every Friday. Every active project. 4:00 PM calendar block. 10 minutes. Metric impact, blockers, next week. Set the health indicator.</p>
+  </div>
+
+  <div class="rule">
+    <div class="rn">Rule 5</div>
+    <div class="rt">Goal updates come before MER, not after</div>
+    <p class="rd">Write your goal-level status update before the Monthly Execution Review. The MER discusses your update &mdash; it's not the place to present it for the first time.</p>
+  </div>
+
+  <div class="rule">
+    <div class="rn">Rule 6</div>
+    <div class="rt">Issues go in the right team</div>
+    <p class="rd">Work for Sales goes in Amplify Sales. Work for Support goes in Amplify Support. If an issue spans teams, put it in the primary team and link related issues.</p>
+  </div>
+
+  <div class="rule">
+    <div class="rn">Rule 7</div>
+    <div class="rt">Use cycles consistently</div>
+    <p class="rd">Every active issue should be in the current cycle. Don't let issues float in backlog while engineers are actually working on them.</p>
+  </div>
+</section>
+
+<div style="text-align: center; padding: 2rem 0 0.5rem; color: var(--text-secondary); font-size: 0.78rem;">
+  Amplify &middot; Working AI First &middot; 2026
+</div>
+
+</main>
+
+</body>
+</html>
