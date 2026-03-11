@@ -87,6 +87,55 @@ Both audiences are first-class with different lenses into the same data:
 - Preview mockup cards (grayed out): hours saved, agent autonomy rate, business metrics, coverage
 - No backend work — future implementation will pull from Linear + internal metrics pipelines
 
+## Linear Data Model Mapping
+
+### Hierarchy
+- **Initiative** = "Working AI First" (top-level Linear Initiative, Drew owns)
+- **Goals** = Linear Sub-Initiatives under Working AI First. One per partner org. These have native health status (On Track / At Risk / Off Track) set via Linear's project update mechanism.
+- **Projects** = Linear Projects within each team. Each project belongs to a team and connects to a goal.
+- **Milestones** = Linear Milestones on projects. At least one per project per quarter.
+- **Issues** = Linear Issues within projects, assigned to cycles.
+
+### Team-to-Linear Mapping
+
+| Org Filter | Linear Team Name | PM Owner |
+|------------|-----------------|----------|
+| Sales | Amplify Sales | Jay Chiruvolu |
+| Sales | Amplify Demos | Jay Chiruvolu |
+| Support | Amplify Support | Jeremy Blanchard |
+| CS/Services | Amplify Success & Services | Tyler Beck |
+| R&D | Amplify R&D | Christina Valente |
+| Marketing | Amplify Marketing | Richard Ng |
+
+Team IDs will be resolved at build time via the Linear API `teams` query and stored as environment config. The `?team=` filter parameter accepts the org name (e.g., `?team=sales`) and maps to the corresponding Linear team ID(s).
+
+### Goal-to-Org Mapping
+
+| Goal (Sub-Initiative) | Org | Linear Team(s) |
+|----------------------|-----|----------------|
+| Increase Seller PPR by 30% | Sales | Amplify Sales, Amplify Demos |
+| Resolve 55% via automated resolution | Support | Amplify Support |
+| Increase Success & Services time w/ customers by 30% | CS/Services | Amplify Success & Services |
+| Increase R&D efficiency by 13% | R&D | Amplify R&D |
+| Improve G&A, Marketing, Ops efficiency by 15% | Marketing | Amplify Marketing |
+
+For /digests, each goal maps to exactly one org. Monthly digests are the most recent status update on each goal (Linear Sub-Initiative update) within a calendar month.
+
+### Health Status
+Health status comes from Linear's native project/goal health field, set by PMs in their Friday project updates and monthly goal updates. Values: On Track, At Risk, Off Track.
+
+### Loom Extraction Rules
+- Scan Linear **project updates** (the status update body text) for URLs matching `loom.com/share/*`
+- Also scan **issue comments** on issues within Amplify team projects
+- Extract: Loom URL, parent project name (as title), team (for org tag), update date
+- If multiple Loom links appear in a single update, each becomes a separate demo entry
+- Title = parent project name + update date (e.g., "BDR Intelligence Platform — Mar 7")
+
+### Intake Title Generation
+- Title = first 100 characters of the description field, truncated at the last word boundary
+- If the description contains newlines, use only the first line (up to 100 chars)
+- If the first line is blank, use "Untitled request from [name]"
+
 ## Architecture
 
 ### Tech Stack
@@ -110,9 +159,18 @@ Both audiences are first-class with different lenses into the same data:
 All read endpoints accept an optional `?team=` query parameter for org filtering.
 
 ### Caching Strategy
-- Serverless functions cache Linear API responses in-memory with TTL
-- Read-heavy endpoints (digests) cache longer; real-time-ish endpoints (roadmap) cache shorter
+- Use Next.js ISR (Incremental Static Regeneration) with `revalidate` for read endpoints:
+  - `/api/roadmap`: `revalidate: 300` (5 min)
+  - `/api/shipped`: `revalidate: 900` (15 min)
+  - `/api/demos`: `revalidate: 900` (15 min)
+  - `/api/digests`: `revalidate: 1800` (30 min)
+- Alternatively, use `Cache-Control` headers on API routes for Vercel's edge cache
 - No database needed — Linear is the single source of truth
+
+### Auth & Security Notes
+- Internal network / VPN access only — no per-user authentication for v1
+- The /intake "Your name" field is unvalidated free text. This is an accepted tradeoff: all users are internal Klaviyo employees, and the PM triages every request at Monday PM Sync. Abuse risk is negligible in an internal tool.
+- Linear API key stored in Vercel environment variables, never exposed client-side
 
 ## Key Design Decisions
 
