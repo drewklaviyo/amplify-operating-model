@@ -1,0 +1,23 @@
+docs/superpowers/specs/2026-03-11-k-amplify-design.md
+  8751f70625e0a304 90-138,162-167,170-173
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "1ac90fb4bac701c81f4399ce9c7e093bda55c9d6",
+  "prompts": {
+    "8751f70625e0a304": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2cc97698-14f1-49ae-a741-d3e1e681c03e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "drewklaviyo <drew.kull@klaviyo.com>",
+      "messages": [],
+      "total_additions": 60,
+      "total_deletions": 2,
+      "accepted_lines": 346,
+      "overriden_lines": 0
+    }
+  }
+}
