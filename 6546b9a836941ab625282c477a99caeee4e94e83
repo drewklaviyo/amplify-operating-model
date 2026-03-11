@@ -1,0 +1,23 @@
+index.html
+  8751f70625e0a304 439-451
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "6546b9a836941ab625282c477a99caeee4e94e83",
+  "prompts": {
+    "8751f70625e0a304": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2cc97698-14f1-49ae-a741-d3e1e681c03e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "drewklaviyo <drew.kull@klaviyo.com>",
+      "messages": [],
+      "total_additions": 203,
+      "total_deletions": 19,
+      "accepted_lines": 489,
+      "overriden_lines": 0
+    }
+  }
+}
