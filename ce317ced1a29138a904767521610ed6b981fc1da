@@ -1,0 +1,23 @@
+docs/superpowers/plans/2026-03-11-k-amplify-implementation.md
+  8751f70625e0a304 1-2150
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "ce317ced1a29138a904767521610ed6b981fc1da",
+  "prompts": {
+    "8751f70625e0a304": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2cc97698-14f1-49ae-a741-d3e1e681c03e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "drewklaviyo <drew.kull@klaviyo.com>",
+      "messages": [],
+      "total_additions": 2150,
+      "total_deletions": 0,
+      "accepted_lines": 2436,
+      "overriden_lines": 0
+    }
+  }
+}
