@@ -1,0 +1,23 @@
+index.html
+  8751f70625e0a304 271,286,313,317-319,338-406,449,459,472,479,490,493,497-513,528,732-733,754-767,779-783,785,787,794,796,801-804,891-892,935,945
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.11",
+  "base_commit_sha": "fd83f718330095d65a9826d6eba6e5e27dc1da1e",
+  "prompts": {
+    "8751f70625e0a304": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2cc97698-14f1-49ae-a741-d3e1e681c03e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "drewklaviyo <drew.kull@klaviyo.com>",
+      "messages": [],
+      "total_additions": 136,
+      "total_deletions": 44,
+      "accepted_lines": 610,
+      "overriden_lines": 0
+    }
+  }
+}
